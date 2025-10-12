@@ -1,0 +1,309 @@
+/* ===========================
+   Global / Base
+   =========================== */
+:root { --bg:#000; --text:#fff; }
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+/* ===========================
+   Canvas layers (animated BG)
+   =========================== */
+#bg, #fx {
+  position: fixed;
+  inset: 0;
+  display: block;
+}
+#bg { z-index: 0; }
+#fx { z-index: 1; pointer-events: none; }
+
+/* ===========================
+   Nav + Hero
+   =========================== */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 3;
+  padding: 14px 20px;
+}
+.nav-inner {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Brand + headline stack */
+.brand-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding-top: 8px;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 22px; /* smaller than before */
+  letter-spacing: 0.01em;
+}
+
+/* Headline directly under brand with smaller size */
+.title-tight {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0;
+  text-align: left;
+  font-size: clamp(10px, 3.5vw, 38px); /* reduced size */
+  color: #fff;
+  text-shadow: 0 6px 18px rgba(0,0,0,.4);
+}
+.title-tight em { font-style: italic;}
+
+/* ===========================
+   CTA Button (lower center)
+   =========================== */
+.cta {
+  position: fixed;
+  bottom: 40px;        /* distance from bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 14px 28px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 700;
+  font-size: 18px;
+  background: #fff;
+  color: #111;
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+  cursor: pointer;
+  z-index: 3;
+}
+.cta:focus-visible {
+  outline: 2px solid rgba(255,255,255,.9);
+  outline-offset: 2px;
+}
+
+/* ===========================
+   Menu pill at top center
+   =========================== */
+.menu-pill {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(40,40,40,.6);
+  color: #fff;
+  font-weight: 600;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+.menu-pill:focus-visible {
+  outline: 2px solid rgba(255,255,255,.9);
+  outline-offset: 2px;
+}
+
+/* Hide badge if still present */
+.badge { display: none !important; }
+
+/* ===========================
+   Responsive tweaks
+   =========================== */
+@media (min-width: 768px) {
+  .brand { font-size: 20px; }
+  .title-tight { font-size: clamp(24px, 3vw, 40px); }
+}
+
+@media (min-width: 1200px) {
+  .brand { font-size: 22px; }
+  .title-tight { font-size: 32px; }
+}
+
+/* ========= Fullscreen Menu Overlay ========= */
+/* ======= Fullscreen Menu Overlay — “original” look ======= */
+:root{
+  --menu-bg: #072e0e;         /* deep green */
+  --menu-text: #e9f7ea;
+  --menu-accent: rgba(255,255,255,.14);
+}
+
+.menu-overlay{
+  position: fixed; inset: 0;
+  z-index: 50;
+  background: var(--menu-bg);
+  color: var(--menu-text);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4%);
+  transition: opacity .35s ease, transform .35s ease;
+  overflow-y: auto;            /* allow scroll if needed */
+}
+
+.menu-overlay.is-open{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.menu-shell{
+  width: min(1280px, 92vw);
+  margin: 0 auto;
+  padding: 16px 0 56px;
+}
+
+/* Top row: brand left, Close centered */
+.menu-top{
+  position: sticky; top: 0;   /* keep “Close” visible on scroll */
+  display: flex; justify-content: center; align-items: center;
+  padding: 10px 0 18px;
+  background: linear-gradient(to bottom, rgba(7,46,14,0.95), rgba(7,46,14,0));
+  z-index: 2;
+}
+.menu-top .brand.light{
+  position: absolute; left: 20px;
+  font-weight: 700;
+  font-size: clamp(22px, 2.2vw, 28px);
+  letter-spacing: .01em;
+  color: var(--menu-text);
+}
+.menu-close{
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--menu-accent);
+  background: rgba(255,255,255,.08);
+  color: var(--menu-text);
+  font-weight: 700;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Centered giant menu list */
+.menu-nav{
+  min-height: calc(100vh - 120px);
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+.menu-nav ul{
+  list-style: none; margin: 0; padding: 0;
+  display: grid;
+  gap: clamp(12px, 2.2vh, 24px);
+}
+
+/* Default item style: big, dimmed */
+/* Base item style: normal/bright enough */
+.menu-nav a{
+  text-decoration: none;
+  color: var(--menu-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 300;
+  letter-spacing: .01em;
+  font-size: 4em;
+  line-height: .92;
+  opacity: .85;                    /* regular by default */
+  transition: opacity .2s ease, transform .2s ease;
+  position: relative;
+}
+
+/* First item keeps the serif/italic look (no underline by default) */
+.menu-nav li.first a{
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Underline element (hidden until hover/focus) */
+.menu-nav li a::after{
+  content:"";
+  display:block;
+  height:3px;
+  width:62%;
+  margin:.18em auto 0;
+  background:currentColor;
+  opacity:0;
+  transition:opacity .25s ease;
+}
+
+/* Hover model:
+   - when the list is hovered, dim all items
+   - hovered/focused item brightens + shows underline */
+@media (hover:hover){
+  .menu-nav:hover a{ opacity:.28; }          /* dim others */
+  .menu-nav li:hover a{
+    opacity:1;
+    transform:translateY(-2px);
+  }
+  .menu-nav li:hover a::after{ opacity:.9; } /* underline only on hovered */
+}
+
+/* Keyboard accessibility: underline on focus, keep others undimmed */
+.menu-nav a:focus-visible{
+  outline:2px solid rgba(255,255,255,.85);
+  outline-offset:3px;
+}
+.menu-nav a:focus-visible::after{ opacity:.9; }
+
+/* =========================
+   MOBILE HEADER LAYOUT
+   Puts the tagline under the Menu pill on phones
+   ========================= */
+@media (max-width: 640px){
+  /* Stack header content vertically and center it */
+  .nav.nav-with-hero .nav-inner{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    gap:8px;                     /* space between menu + tagline */
+    padding-top:10px;
+    position:relative;
+    z-index:5;                   /* stays over the background */
+  }
+
+  /* Menu pill centered naturally in the flow */
+  .menu-pill{
+    order:1;
+    position:relative;           /* remove any absolute/transform from desktop */
+    top:auto; left:auto; transform:none;
+  }
+
+  /* Tagline (“Illustrator & Art Director”) directly under Menu pill */
+  .brand-stack .brand{
+    order:2;
+    font-size:clamp(14px, 3.8vw, 18px);
+    line-height:1.2;
+    color:#fff;
+    text-align:center;
+    margin:0 auto;                    /* reset any desktop margins */
+    padding:0 12px;              /* a little breathing room on sides */
+    font-size: 2rem;
+    text-shadow:0 1px 2px rgba(0,0,0,.35); /* helps on busy BGs */
+  }
+
+  /* Keep the rest of the brand stack full-width below */
+  .brand-stack{
+    order:3;
+    width:100%;
+    padding:0 16px;
+  }
+
+  /* Optional: tighten hero title spacing for mobile */
+  .brand-stack .title{
+    margin-top:12px;
+  }
+}

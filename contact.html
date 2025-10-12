@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — Portfolio</title>
+
+  <!-- Shared site styles -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- Page-specific styles (namespaced) -->
+  <link rel="stylesheet" href="contact.css" />
+
+  <!-- Fonts (match your home page vibe) -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Full-viewport background (only this page uses ink blobs) -->
+  <canvas id="bg"></canvas>
+  <canvas id="fx"></canvas>
+
+  <!-- Top bar (reusing your site’s nav/menu) -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="./" class="brand">Contact</a>
+      <button class="menu-pill" aria-label="Open menu">Menu</button>
+    </div>
+  </header>
+
+  <!-- Contact content -->
+  <main class="c-wrap">
+    <div class="c-shell">
+      <h1 class="c-hero">I’m <em>open to work</em> — let’s connect.</h1>
+
+      <section class="c-grid">
+        <!-- Query Form -->
+        <form id="contactForm" class="c-card c-form" novalidate>
+          <div class="c-field">
+            <input id="c-name" name="name" type="text" placeholder=" " required autocomplete="name" />
+            <label for="c-name">Your name</label>
+            <span class="c-error" aria-live="polite"></span>
+          </div>
+
+          <div class="c-field">
+            <input id="c-email" name="email" type="email" placeholder=" " required autocomplete="email" />
+            <label for="c-email">Email</label>
+            <span class="c-error" aria-live="polite"></span>
+          </div>
+
+          <div class="c-field">
+            <input id="c-subject" name="subject" type="text" placeholder=" " />
+            <label for="c-subject">Subject (optional)</label>
+          </div>
+
+          <div class="c-field">
+            <textarea id="c-message" name="message" rows="6" placeholder=" " required></textarea>
+            <label for="c-message">Your message</label>
+            <span class="c-error" aria-live="polite"></span>
+          </div>
+
+          <!-- Honeypot (anti-spam) -->
+          <div class="c-hp" aria-hidden="true">
+            <label for="hp-website">Leave this empty</label>
+            <input id="hp-website" type="text" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="c-actions">
+            <button class="cta" type="submit">Send message</button>
+          </div>
+
+          <div class="c-toast" role="status" aria-live="polite"></div>
+        </form>
+
+        <!-- Direct contact + socials -->
+        <aside class="c-card c-info">
+          <h2>Contact</h2>
+          <p class="c-email">
+            <a href="mailto:harnaam.singh1304@gmail.com">harnaam.singh1304@gmail.com</a>
+          </p>
+
+          <h2>Social</h2>
+          <ul class="c-social">
+            <li><a href="https://www.instagram.com/harnaam_singh_/" target="_blank" rel="me noopener">Instagram</a></li>
+            <li><a href="https://facebook.com/" target="_blank" rel="me noopener">Facebook</a></li>
+            <li><a href="https://www.linkedin.com/in/harnaam-singh-449133357/" target="_blank" rel="me noopener">LinkedIn</a></li>
+          </ul>
+
+          <p class="c-small">Available for freelance illustration, concept art, storyboards, comics, and art direction.</p>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <!-- Your global menu overlay logic -->
+  <script src="menu.js"></script>
+
+  <!-- Page logic + background (contact-only) -->
+  <script src="contact.js"></script>
+  <script src="ink-blobs.js"></script>
+  <script src="menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+/* ===== Base & Header ===== */
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;color:#000000;overflow-x:hidden;background:#0c1013}
+
+.aw-top{
+  position:fixed;inset:0 0 auto;height:56px;z-index:30;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:0 18px;background:rgba(255, 255, 255);backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(0,0,0,.06)
+}
+.aw-left{font-weight:900;letter-spacing:.02em}
+.aw-center{display:flex;justify-content:center}
+.aw-right{display:flex;justify-content:flex-end}
+.aw-right a{color:#0b0f0b;text-decoration:none;font-weight:800;letter-spacing:.06em;font-size:13px}
+
+.menu-pill{
+  border:1px solid rgba(0,0,0,.12);background:#ffffff;color:#000000;border-radius:999px;
+  padding:8px 16px;font-weight:800;font-size:14px;box-shadow:0 6px 18px rgba(0,0,0,.12)
+}
+
+/* ===== Grid (two columns; rows 100vh) ===== */
+.aw-list{
+  margin-top:56px;               /* below header */
+  scroll-snap-type:y mandatory;  /* invisible barrier between rows */
+}
+.aw-row{
+  height:110vh;display:grid;grid-template-columns:50vw 50vw;scroll-snap-align:start;
+  background:#ffffff;           /* subtle dark around images */
+}
+.aw-col{position:relative}
+
+/* Text column */
+.aw-text{
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  padding:4vw;color:#000000
+}
+.aw-title{
+  appearance:none;border:none;background:transparent;color:#000000;cursor:pointer;
+  font-weight:900;letter-spacing:.01em;text-align:left;
+  font-size:clamp(26px,4.5vw,56px);line-height:1.05;padding:0;margin:0 0 10px
+}
+.aw-kicker{opacity:.75;font-weight:700;letter-spacing:.06em;margin:0 0 8px}
+.aw-blurb{max-width:70ch;opacity:.9;line-height:1.6;margin:0;}
+
+/* Image column */
+.aw-media{display:flex;justify-content:center;align-items:center;background:#ffffff}
+.aw-media img{
+  width:100%;height:100vh;object-fit:cover;display:block;
+  filter:saturate(1);transform:scale(.995);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1), filter .4s
+}
+.aw-media:hover img{transform:scale(1);}
+
+/* Alternate layout (title left / right swap) */
+.aw-row.alt-0 .aw-text{order:1}
+.aw-row.alt-0 .aw-media{order:2}
+.aw-row.alt-1 .aw-media{order:1}
+.aw-row.alt-1 .aw-text{order:2}
+
+/* ===== OPEN STATE (inline detail) =====
+   When a row is "open", the right/left image becomes a sticky stage (80% x 80%),
+   and we scroll through the slides while the text column updates live. */
+.aw-row.open{height:auto} /* let internal scroller decide */
+.aw-row.open .aw-media{
+  display:block; /* allow sticky child */
+  background:#ffffff;min-height:98vh
+}
+.aw-row.open .aw-stage{
+  position:sticky; top:calc(56px + 4vh); height:80vh; width:80%; margin:0 auto;
+  border-radius:10px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.5);
+  display:grid;place-items:center;background:#000
+}
+.aw-row.open .aw-stage img,
+.aw-row.open .aw-stage video{
+  max-width:100%; max-height:100%;
+  object-fit:contain; display:block; opacity:0; transform:scale(.98);
+  transition:opacity .45s, transform .55s cubic-bezier(.2,.8,.2,1)
+}
+.aw-row.open .aw-stage .active{opacity:1; transform:none}
+
+/* The vertical "steps" create scroll length; each is 100vh */
+.aw-row.open .aw-steps{height:calc(var(--steps,1) * 100vh)}
+.aw-row.open .aw-steps .step{height:100vh}
+
+/* Text column in open: shows dynamic caption */
+.aw-row.open .aw-text{position:relative}
+.aw-row.open .aw-dyn{
+  margin-top:12px;opacity:.9;line-height:1.6;max-width:42ch
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 820px){
+  .aw-row{grid-template-columns:100vw; grid-auto-rows:auto; height:100vh}
+  .aw-row .aw-text{order:1; padding:6vw; min-height:20vh; justify-content:flex-end}
+  .aw-row .aw-media{order:2}
+  .aw-media img{height:60vh}
+  .aw-row.open .aw-stage{top:calc(56px + 2vh); width:90vw; height:62vh}
+}
+
+/* ===== Subtle reveal on enter (optional) ===== */
+.aw-row .aw-text, .aw-row .aw-media{opacity:0;transform:translateY(24px)}
+.aw-row.in .aw-text, .aw-row.in .aw-media{opacity:1;transform:none;transition:opacity .45s, transform .6s}
+.aw-row.in .aw-media{transition-delay:.06s}
+
+
+/* Opened slider mode */
+.aw-row.open {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  background: #ffffff;
+  color: #fff;
+  position: relative;
+}
+
+.aw-row.open .aw-media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aw-slider {
+  position: relative;
+  width: 90%;
+  height: 80%;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+.aw-slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.aw-slide.active {
+  display: block;
+}
+
+.aw-slide img, .aw-slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Arrows */
+.aw-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(20,20,20,0.7);
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 50%;
+  z-index: 2;
+}
+.aw-arrow.left { left: 10px; }
+.aw-arrow.right { right: 10px; }
+
+/* Caption inside left column */
+.aw-caption {
+  margin-top: 20px;
+  font-size: clamp(14px, 1.2vw, 18px);
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* Close button */
+.aw-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(20,20,20,.8);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Cursor badge */
+.aw-cursor-badge{
+  position: fixed;
+  left: 0; top: 0;
+  z-index: 1000;
+  pointer-events: none;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font: 700 12px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #fff;
+  background: rgba(10,10,10,.9);
+  border: 1px solid rgba(255,255,255,.25);
+  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* Mobile layout changes: slider on top, text under it */
+@media (max-width: 820px){
+  /* grid rows stack to 1 column in general (you probably already have similar) */
+  .aw-row{ grid-template-columns: 100vw !important; height: 100vh; }
+
+  /* OPEN state: slider first, text below */
+  .aw-row.open{
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: auto;
+    align-items: start;
+  }
+  .aw-row.open .aw-media{ order: 1; }
+  .aw-row.open .aw-text{ order: 2; padding: 6vw; }
+  .aw-row.open .aw-slider{ width: 92vw; height: 64vh; margin: 0 auto; }
+  .aw-row.open .aw-caption{ margin-top: 14px; font-size: 15px; }
+  .aw-row.open .aw-close{ right: 6vw; }
+}

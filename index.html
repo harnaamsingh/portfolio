@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Harnaam Singh Portfolio</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Background canvases (particles + glow) -->
+  <canvas id="bg"></canvas>
+  <canvas id="fx"></canvas>
+
+  <!-- Nav + hero content stacked, so headline is right under "Gladeye" -->
+  <header class="nav nav-with-hero">
+    <div class="nav-inner">
+      <div class="brand-stack">
+        <div class="brand"><i>Illustrator & Art Director</i></div>
+
+        <!-- Headline directly under the brand -->
+        <h1 class="title title-tight">
+        </h1>
+
+        <button class="cta"><a href="artworks.html" style="text-decoration: None; color: black;"">Explore Work</a></button>
+      </div>
+
+      <!-- Center Menu pill -->
+      <button class="menu-pill" aria-label="Open menu">Menu</button>
+      <!-- Top-right circle removed on purpose -->
+    </div>
+  </header>
+
+  <!-- ...your existing HTML... -->
+
+<!-- Fullscreen Menu Overlay -->
+<div id="menuOverlay" class="menu-overlay" aria-hidden="true">
+  <div class="menu-shell">
+    <header class="menu-top">
+      <div class="brand light">Harnaam Singh</div>
+      <button class="menu-close" aria-label="Close menu">Close</button>
+    </header>
+
+    <nav class="menu-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li class="first"><a href="info.html"><em>Info</em></a></li>
+        <li><a href="artworks.html">Artworks</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<!-- Scripts (keep your existing script.js include) -->
+<script src="script.js"></script>
+<script src="menu.js"></script>
+
+</body>
+</html>

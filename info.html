@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Info — Harnaam Singh</title>
+
+  <!-- global + page styles -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="info.css" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+
+  <!-- Background canvases (optional blobs, same as contact) -->
+  <canvas id="bg"></canvas>
+  <canvas id="fx"></canvas>
+
+  <!-- Top nav (reuses your menu.js) -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="./" class="brand">Harnaam Singh</a>
+      <button class="menu-pill" aria-label="Open menu">Menu</button>
+    </div>
+  </header>
+
+  <main class="i-wrap">
+    <div class="i-shell">
+
+      <h1 class="i-hero">A little about me.</h1>
+
+      <section class="i-grid">
+        <!-- Left: profile card -->
+        <aside class="i-card i-profile">
+          <div class="i-avatar">
+            <!-- Replace me.jpg with your image file -->
+            <img src="main.jpg" alt="Portrait of Harnaam Singh" />
+          </div>
+
+          <h2 class="i-name">Harnaam Singh</h2>
+          <p class="i-role">Illustrator &amp; Art Director</p>
+
+          <a class="i-email" href="mailto:harnaam.singh1304@gmail.com">harnaam.singh1304@gmail.com</a>
+
+          <ul class="i-social">
+            <li><a href="https://www.instagram.com/harnaam_singh_/" target="_blank" rel="me noopener">Instagram</a></li>
+            <li><a href="https://www.linkedin.com/in/harnaam-singh-449133357/" target="_blank" rel="me noopener">LinkedIn</a></li>
+            <li><a href="https://facebook.com/" target="_blank" rel="me noopener">Facebook</a></li>
+          </ul>
+
+          <div class="i-actions">
+            <a class="i-btn" href="contact.html">Get in touch</a>
+            <!-- optional resume -->
+            <!-- <a class="i-btn ghost" href="Harnaam_Singh_Resume.pdf" download>Download CV</a> -->
+          </div>
+        </aside>
+
+        <!-- Right: details -->
+        <section class="i-card i-details">
+          <div class="i-block">
+            <h3>Education</h3>
+            <ul class="i-list">
+              <li>
+                <div class="i-row">
+                  <span class="i-title">University</span>
+                  <span class="i-value"> University for the Creative Arts</span>
+                </div>
+              </li>
+              <li>
+                <div class="i-row">
+                  <span class="i-title">Course</span>
+                  <span class="i-value">Bachelor's in Illustration Arts</span>
+                </div>
+              </li>
+              <li>
+                <div class="i-row">
+                  <span class="i-title">Years</span>
+                  <span class="i-value">2022-2026</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="i-block">
+            <h3>About me</h3>
+            <p class="i-about">
+              I’m an illustrator and art director focused on concept art, storyboards and comics. 
+              I love blending bold composition with playful color to tell character-driven stories. 
+              I’ve worked on indie films, ad spots, and editorial illustration—always curious, always exploring.
+            </p>
+          </div>
+<!-- 
+          <div class="i-block">
+            <h3>Past work references</h3>
+            <ul class="i-refs">
+            
+              <li class="i-ref">
+                <div class="i-ref-avatar"><img src="ref-1.jpg" alt="Jane Doe portrait"></div>
+                <div class="i-ref-meta">
+                  <div class="i-ref-name">Jane Doe</div>
+                  <div class="i-ref-role">Creative Producer, Studio X</div>
+                  <div class="i-ref-links">
+                    <a href="mailto:jane@example.com">Email</a>
+                    <span>·</span>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+                  </div>
+                </div>
+              </li>
+
+              <li class="i-ref">
+                <div class="i-ref-avatar"><img src="ref-2.jpg" alt="Akash Mehta portrait"></div>
+                <div class="i-ref-meta">
+                  <div class="i-ref-name">Akash Mehta</div>
+                  <div class="i-ref-role">Director, Bluebird Films</div>
+                  <div class="i-ref-links">
+                    <a href="mailto:akash@example.com">Email</a>
+                    <span>·</span>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+                  </div>
+                </div>
+              </li>
+
+    
+            </ul>
+          </div>
+        </section>
+      </section> -->
+    </div>
+  </main>
+
+  <!-- Global menu logic (autocreates overlay if missing) -->
+  <script src="menu.js"></script>
+
+  <!-- Background (use if you want same ink blobs as contact) -->
+  <script src="ink-blobs.js"></script>
+  <!-- If you prefer static image like home, swap in your static script instead -->
+  <!-- <script src="script.js"></script> -->
+</body>
+</html>
