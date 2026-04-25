@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Harnaam Singh</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="contact.css" />
+  <style>
+    html { overflow-y: auto !important; }
+    body {
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 90% 60% at 15% 25%, rgba(12,48,20,0.98) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 80% at 85% 75%, rgba(8,30,14,0.95) 0%, transparent 60%),
+        radial-gradient(ellipse 120% 120% at 50% 50%, #060e07 0%, #030906 100%) !important;
+    }
+    .nav {
+      background: rgba(4,10,5,0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+  </style>
+</head>
+<body>
+  <header class="nav" role="banner">
+    <a href="index.html" class="nav-brand">Harnaam Singh</a>
+    <button class="menu-pill" aria-label="Open navigation">Menu</button>
+  </header>
+
+  <main class="c-wrap">
+    <div class="c-shell">
+      <h1 class="c-hero">I'm <em>open to work</em> — let's connect.</h1>
+
+      <div class="c-grid">
+        <form id="contactForm" class="c-card c-form" novalidate>
+
+          <div class="c-field">
+            <input id="c-name" name="name" type="text" placeholder=" " required autocomplete="name" />
+            <label for="c-name">Your name</label>
+            <span class="c-error" aria-live="polite"></span>
+          </div>
+
+          <div class="c-field">
+            <input id="c-email" name="email" type="email" placeholder=" " required autocomplete="email" />
+            <label for="c-email">Email address</label>
+            <span class="c-error" aria-live="polite"></span>
+          </div>
+
+          <div class="c-field">
+            <input id="c-subject" name="subject" type="text" placeholder=" " />
+            <label for="c-subject">Subject (optional)</label>
+          </div>
+
+          <div class="c-field">
+            <textarea id="c-message" name="message" rows="5" placeholder=" " required></textarea>
+            <label for="c-message">Your message</label>
+            <span class="c-error" aria-live="polite"></span>
+          </div>
+
+          <!-- Honeypot anti-spam -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;">
+            <label for="hp-site">Leave this empty</label>
+            <input id="hp-site" type="text" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="c-actions">
+            <button type="submit" class="btn-pill">Send message</button>
+          </div>
+
+          <div id="cToast" class="c-toast" role="status" aria-live="polite"></div>
+        </form>
+
+        <aside class="c-card c-info">
+          <h2 class="c-info-heading">Direct contact</h2>
+          <p class="c-info-email">
+            <a href="mailto:harnaam.singh1304@gmail.com">harnaam.singh1304@gmail.com</a>
+          </p>
+
+          <h2 class="c-info-heading">Social</h2>
+          <ul class="c-social">
+            <li><a href="https://www.instagram.com/harnaam_singh_/" target="_blank" rel="me noopener">Instagram</a></li>
+            <li><a href="https://facebook.com/" target="_blank" rel="me noopener">Facebook</a></li>
+            <li><a href="https://www.linkedin.com/in/harnaam-singh-449133357/" target="_blank" rel="me noopener">LinkedIn</a></li>
+          </ul>
+
+          <p class="c-available">
+            Available for freelance illustration, concept art, storyboards, comics, and editorial work.
+          </p>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <script src="contact.js"></script>
+  <script src="menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kagemusha — Comics</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    html, body { height: 100%; overflow: hidden; background: #080808; font-family: var(--font-body); }
+
+    /* ── Nav ── */
+    .aw-nav {
+      position: fixed;
+      inset: 0 0 auto;
+      height: var(--nav-h);
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .aw-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .aw-back:hover { color: var(--text); }
+    .aw-nav-title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ── Intro ── */
+    .kg-intro {
+      position: fixed;
+      inset: var(--nav-h) 0 0;
+      z-index: 15;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #080808;
+      padding: 40px 24px;
+      transition: opacity 0.5s, transform 0.5s;
+    }
+    .kg-intro.hidden { opacity: 0; pointer-events: none; transform: translateY(-16px); }
+
+    .kg-intro-inner {
+      max-width: 680px;
+      text-align: center;
+    }
+    .kg-eyebrow {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .kg-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 10vw, 110px);
+      font-weight: 500;
+      line-height: 0.95;
+      color: #fff;
+      margin-bottom: 32px;
+    }
+    .kg-synopsis {
+      font-family: var(--font-body);
+      font-size: clamp(14px, 1.3vw, 17px);
+      line-height: 1.75;
+      color: rgba(240,237,232,0.72);
+      margin-bottom: 40px;
+    }
+    .kg-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: color 0.2s;
+    }
+    .kg-cta:hover { color: var(--text); }
+    .kg-scroll-hint {
+      width: 26px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      position: relative;
+    }
+    .kg-scroll-hint::after {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 7px;
+      background: var(--text-muted);
+      border-radius: 999px;
+      animation: scrollDot 1.6s ease-in-out infinite;
+    }
+    @keyframes scrollDot {
+      0%  { opacity: 1; top: 5px; }
+      80% { opacity: 0; top: 22px; }
+      100%{ opacity: 0; top: 5px; }
+    }
+
+    /* ── Viewer: full-bleed scroll, no text panel ── */
+    .kg-viewer {
+      position: fixed;
+      inset: var(--nav-h) 0 0;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      -webkit-overflow-scrolling: touch;
+      background: #050505;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+    .kg-viewer::-webkit-scrollbar { display: none; }
+    .kg-viewer { scrollbar-width: none; }
+    .kg-viewer.active { opacity: 1; pointer-events: auto; }
+
+    /* ── Slide types ── */
+    .kg-slide {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100%;
+      padding: 16px;
+      background: #050505;
+    }
+
+    /* Single page */
+    .kg-slide.single img {
+      max-height: calc(100dvh - var(--nav-h) - 32px);
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+      border-radius: 4px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+    }
+
+    /* Double spread */
+    .kg-slide.spread {
+      gap: 2px;
+      padding: 12px 8px;
+    }
+    .kg-slide.spread img {
+      max-height: calc(100dvh - var(--nav-h) - 24px);
+      width: calc(50% - 1px);
+      object-fit: contain;
+      display: block;
+      border-radius: 2px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    }
+
+    /* Entrance fade */
+    .kg-slide img {
+      opacity: 0;
+      transform: scale(0.98);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .kg-slide.in-view img { opacity: 1; transform: scale(1); }
+
+    /* ── Progress bar ── */
+    .kg-progress {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.55);
+      z-index: 20;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+      .kg-slide.spread { flex-direction: column; gap: 4px; padding: 8px; }
+      .kg-slide.spread img { width: 100%; max-height: 48dvh; }
+      .kg-slide.single img { max-height: calc(100dvh - var(--nav-h) - 16px); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="aw-nav" role="banner">
+    <a href="comics.html" class="aw-back">← Comics</a>
+    <span class="aw-nav-title">Kagemusha</span>
+    <button class="menu-pill" aria-label="Open navigation">Menu</button>
+  </header>
+
+  <!-- Full synopsis intro -->
+  <section class="kg-intro" id="kgIntro">
+    <div class="kg-intro-inner">
+      <p class="kg-eyebrow">Comics · 01 · 31 pages</p>
+      <h1 class="kg-title">Kagemusha</h1>
+      <p class="kg-synopsis">Three years ago, he was framed, disgraced, and cast out into the shadows. Now, terrified whispers are spreading through the village: Sam is back. His path of retribution leaves absolute carnage in its wake, culminating in the shocking death of the Shogun, Lord Hashirama. Sam steps into the rain for a breathtaking, violent final stand, ensuring that the slate will be wiped entirely clean.</p>
+      <button class="kg-cta" id="kgEnterBtn">
+        <span class="kg-scroll-hint" aria-hidden="true"></span>
+        Scroll to read
+      </button>
+    </div>
+  </section>
+
+  <!-- Full-bleed scroll viewer -->
+  <div class="kg-viewer" id="kgViewer"></div>
+
+  <!-- Progress bar -->
+  <div class="kg-progress" id="kgProgress"></div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    const TOTAL = 31;
+    const intro    = document.getElementById('kgIntro');
+    const viewer   = document.getElementById('kgViewer');
+    const progress = document.getElementById('kgProgress');
+    const enterBtn = document.getElementById('kgEnterBtn');
+
+    // ── Build slides ─────────────────────────────────────────
+    // Layout: page 1 single, pages 2-30 in spreads (pairs), page 31 single
+    const slides = [];
+
+    // Slide 0: page 1 (single)
+    slides.push({ type: 'single', pages: [1] });
+
+    // Slides 1..14: pages 2-3, 4-5, ... 29-30 (spreads)
+    for (let p = 2; p <= 30; p += 2) {
+      slides.push({ type: 'spread', pages: [p, p + 1] });
+    }
+
+    // Last slide: page 31 (single)
+    slides.push({ type: 'single', pages: [31] });
+
+    // total slides = 1 + 14 + 1 = 16
+    const totalSlides = slides.length;
+
+    function imgPath(n) {
+      return `assets/proj2/${String(n).padStart(2, '0')}.jpg`;
+    }
+
+    slides.forEach((slide, i) => {
+      const div = document.createElement('div');
+      div.className = `kg-slide ${slide.type}`;
+      div.dataset.index = i;
+
+      slide.pages.forEach((pageNum, j) => {
+        const img = document.createElement('img');
+        img.src = imgPath(pageNum);
+        img.alt = `Page ${pageNum}`;
+        img.loading = i < 2 ? 'eager' : 'lazy';
+        img.addEventListener('error', function () {
+          if (!this.dataset.fb) {
+            this.dataset.fb = '1';
+            this.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
+              `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800"><rect width="100%" height="100%" fill="#111"/><text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-size="18" fill="#444">page ${pageNum}</text></svg>`
+            )}`;
+          }
+        });
+        div.appendChild(img);
+      });
+
+      viewer.appendChild(div);
+    });
+
+    // ── IntersectionObserver ──────────────────────────────────
+    let currentIndex = 0;
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          currentIndex = parseInt(entry.target.dataset.index, 10);
+          const pct = totalSlides > 1 ? ((currentIndex) / (totalSlides - 1)) * 100 : 100;
+          progress.style.width = pct + '%';
+        } else {
+          entry.target.classList.remove('in-view');
+        }
+      });
+    }, { root: viewer, threshold: 0.5 });
+
+    viewer.querySelectorAll('.kg-slide').forEach(el => observer.observe(el));
+
+    // ── Enter viewer ─────────────────────────────────────────
+    function activate() {
+      intro.classList.add('hidden');
+      viewer.classList.add('active');
+      viewer.querySelectorAll('.kg-slide')[0]?.classList.add('in-view');
+    }
+
+    enterBtn.addEventListener('click', activate);
+    intro.addEventListener('wheel',   activate, { passive: true, once: true });
+    setTimeout(activate, 4000);
+
+    // ── Keyboard nav ─────────────────────────────────────────
+    document.addEventListener('keydown', e => {
+      if (!viewer.classList.contains('active')) return;
+      const slideEls = viewer.querySelectorAll('.kg-slide');
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        slideEls[Math.min(currentIndex + 1, totalSlides - 1)]?.scrollIntoView({ behavior: 'smooth' });
+      }
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        slideEls[Math.max(currentIndex - 1, 0)]?.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  })();
+  </script>
+
+  <script src="menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+/* =============================================================
+   CONTACT PAGE
+   ============================================================= */
+
+html, body {
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: var(--font-body);
+  background: #080e09;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(10,40,16,0.95) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 80% 70%, rgba(6,22,10,0.9) 0%, transparent 65%),
+    radial-gradient(ellipse 100% 100% at 50% 50%, #060d07 0%, #030805 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.nav { position: relative; z-index: 10; }
+.nav .nav-brand { color: #fff; text-decoration: none; font-family: var(--font-display); }
+
+.c-wrap { position: relative; z-index: 2; padding: calc(var(--nav-h) + 40px) 24px 60px; }
+.c-shell { max-width: 1100px; margin: 0 auto; }
+
+.c-hero {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(26px, 3.5vw, 48px);
+  line-height: 1.15;
+  color: #fff;
+  margin-bottom: 32px;
+}
+.c-hero em { font-style: italic; }
+
+.c-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 900px) {
+  .c-grid { grid-template-columns: 1.1fr 0.9fr; gap: 20px; align-items: start; }
+}
+
+.c-card {
+  background: rgba(10,28,12,0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.4);
+  color: #fff;
+}
+
+.c-field { position: relative; margin-bottom: 16px; }
+
+.c-field input,
+.c-field textarea {
+  width: 100%;
+  padding: 14px 14px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.09);
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  resize: vertical;
+}
+.c-field textarea { min-height: 110px; }
+
+.c-field label {
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  color: rgba(240,237,232,0.4);
+  font-family: var(--font-body);
+  font-size: 14px;
+  pointer-events: none;
+  padding: 0 4px;
+  transition: top 0.18s, font-size 0.18s, color 0.18s, background 0.18s;
+}
+
+.c-field input:not(:placeholder-shown) + label,
+.c-field textarea:not(:placeholder-shown) + label,
+.c-field input:focus + label,
+.c-field textarea:focus + label {
+  top: -9px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: rgba(240,237,232,0.65);
+  background: rgba(8,14,9,0.9);
+  border-radius: 4px;
+}
+
+.c-field input:focus,
+.c-field textarea:focus {
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.03);
+}
+
+.c-error { display: block; min-height: 18px; padding: 3px 2px 0; font-family: var(--font-body); font-size: 12px; color: #ffaeae; }
+.c-actions { padding-top: 8px; }
+
+.c-toast {
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-family: var(--font-body);
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.c-toast.show { opacity: 1; }
+
+.c-info-heading {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.35);
+  margin: 0 0 10px;
+}
+.c-info-heading + .c-info-heading, .c-social + .c-info-heading { margin-top: 24px; }
+
+.c-info-email { margin-bottom: 0; }
+.c-info-email a {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(255,255,255,0.22);
+  padding-bottom: 2px;
+  word-break: break-all;
+  transition: border-bottom-style 0.2s;
+}
+.c-info-email a:hover { border-bottom-style: solid; }
+
+.c-social { list-style: none; display: grid; gap: 4px; }
+.c-social a {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: rgba(240,237,232,0.72);
+  text-decoration: none;
+  padding: 6px 0;
+  transition: color 0.2s;
+}
+.c-social a:hover { color: #fff; }
+
+.c-available {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: rgba(240,237,232,0.35);
+  line-height: 1.6;
+  margin-top: 28px;
+}

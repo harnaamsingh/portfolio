@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Info — Harnaam Singh</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="info.css" />
+  <style>
+    html { overflow-y: auto !important; }
+    body {
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 90% 60% at 15% 25%, rgba(12,48,20,0.98) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 80% at 85% 75%, rgba(8,30,14,0.95) 0%, transparent 60%),
+        radial-gradient(ellipse 120% 120% at 50% 50%, #060e07 0%, #030906 100%) !important;
+    }
+    .nav {
+      background: rgba(4,10,5,0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+  </style>
+</head>
+<body>
+  <header class="nav" role="banner">
+    <a href="index.html" class="nav-brand">Harnaam Singh</a>
+    <button class="menu-pill" aria-label="Open navigation">Menu</button>
+  </header>
+
+  <main class="i-wrap">
+    <div class="i-shell">
+      <h1 class="i-hero">A little about me.</h1>
+
+      <div class="i-grid">
+        <aside class="i-card i-profile">
+          <div class="i-avatar">
+            <img src="main.jpg" alt="Portrait of Harnaam Singh" />
+          </div>
+          <h2 class="i-name">Harnaam Singh</h2>
+          <p class="i-role">Illustrator</p>
+          <a class="i-email" href="mailto:harnaam.singh1304@gmail.com">harnaam.singh1304@gmail.com</a>
+          <ul class="i-social">
+            <li><a href="https://www.instagram.com/harnaam_singh_/" target="_blank" rel="me noopener">Instagram</a></li>
+            <li><a href="https://www.linkedin.com/in/harnaam-singh-449133357/" target="_blank" rel="me noopener">LinkedIn</a></li>
+            <li><a href="https://facebook.com/" target="_blank" rel="me noopener">Facebook</a></li>
+          </ul>
+          <div class="i-actions">
+            <a class="i-btn" href="contact.html">Get in touch</a>
+          </div>
+        </aside>
+
+        <section class="i-card i-details">
+          <div class="i-block">
+            <h3>Education</h3>
+            <ul class="i-list">
+              <li>
+                <div class="i-row">
+                  <span class="i-label">University</span>
+                  <span class="i-value">University for the Creative Arts</span>
+                </div>
+              </li>
+              <li>
+                <div class="i-row">
+                  <span class="i-label">Course</span>
+                  <span class="i-value">Bachelor's in Illustration Arts</span>
+                </div>
+              </li>
+              <li>
+                <div class="i-row">
+                  <span class="i-label">Years</span>
+                  <span class="i-value">2022 – 2026</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="i-block">
+            <h3>About</h3>
+            <p class="i-about">
+              I'm an illustrator focused on concept art, storyboards, and comics.
+              I love blending bold composition with playful colour to tell character-driven stories.
+              I've worked on indie films, ad spots, and editorial illustration — always curious, always exploring.
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script src="menu.js"></script>
+</body>
+</html>

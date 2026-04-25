@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artworks — Harnaam Singh</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { overflow: hidden; }
+
+    /* Background dark gradient */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(30,40,30,0.9) 0%, #080808 70%);
+      z-index: 0;
+    }
+
+    .nav { z-index: 10; }
+
+    /* Hub layout */
+    .hub {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      z-index: 2;
+      padding: var(--nav-h) 24px 40px;
+    }
+
+    .hub-heading {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(13px, 1.3vw, 16px);
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+
+    /* Category cards */
+    .hub-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      width: min(640px, 90vw);
+    }
+
+    .hub-item a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 28px;
+      border-radius: 14px;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: background 0.25s, border-color 0.25s, transform 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .hub-item a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--surface);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .hub-item a:hover { 
+      background: rgba(255,255,255,0.06);
+      border-color: var(--border);
+      transform: translateX(6px);
+    }
+    .hub-item a:hover::before { opacity: 1; }
+
+    .hub-item-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hub-item-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    .hub-item-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .hub-item-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .hub-item-arrow {
+      font-size: 22px;
+      color: var(--text-muted);
+      transition: transform 0.25s, color 0.25s;
+    }
+    .hub-item a:hover .hub-item-arrow {
+      transform: translateX(4px);
+      color: var(--text);
+    }
+
+    /* Coming soon state */
+    .hub-item.soon a {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .hub-item.soon .hub-item-title {
+      color: var(--text-muted);
+    }
+    .soon-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 10px;
+      color: var(--text-muted);
+    }
+
+    /* Stagger animation */
+    .hub-heading,
+    .hub-item { opacity: 0; transform: translateY(20px); animation: fadeUp 0.6s var(--ease-out) forwards; }
+    .hub-heading          { animation-delay: 0.1s; }
+    .hub-item:nth-child(1){ animation-delay: 0.2s; }
+    .hub-item:nth-child(2){ animation-delay: 0.32s; }
+    .hub-item:nth-child(3){ animation-delay: 0.44s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 520px) {
+      .hub-item a { padding: 16px 18px; }
+      .hub-item-title { font-size: clamp(24px, 8vw, 38px); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Nav -->
+  <header class="nav" role="banner">
+    <a href="index.html" class="nav-brand">Harnaam Singh</a>
+    <button class="menu-pill" aria-label="Open navigation">Menu</button>
+  </header>
+
+  <!-- Hub -->
+  <main class="hub">
+    <p class="hub-heading">Select a category</p>
+
+    <ul class="hub-list" role="list">
+      <li class="hub-item">
+        <a href="comics.html">
+          <div class="hub-item-left">
+            <span class="hub-item-num">01</span>
+            <span class="hub-item-title">Comics</span>
+            <span class="hub-item-sub">Kagemusha · 1 work</span>
+          </div>
+          <span class="hub-item-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="hub-item">
+        <a href="concept-art.html">
+          <div class="hub-item-left">
+            <span class="hub-item-num">02</span>
+            <span class="hub-item-title">Concept Art</span>
+            <span class="hub-item-sub">Battleship Sphyrna · 1 work</span>
+          </div>
+          <span class="hub-item-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="hub-item soon">
+        <a href="#" aria-disabled="true" tabindex="-1">
+          <div class="hub-item-left">
+            <span class="hub-item-num">03</span>
+            <span class="hub-item-title">Storyboard</span>
+          </div>
+          <span class="soon-tag">Coming Soon</span>
+        </a>
+      </li>
+    </ul>
+  </main>
+
+  <script src="menu.js"></script>
+</body>
+</html>
