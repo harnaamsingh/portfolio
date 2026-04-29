@@ -10,7 +10,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <style>
-    html, body { height: 100%; overflow: hidden; background: #080808; font-family: var(--font-body); }
+    html, body {
+      height: auto;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background: #080808;
+    }
 
     /* ── Nav ── */
     .aw-nav {
@@ -22,7 +27,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 24px;
-      background: rgba(8,8,8,0.85);
+      background: rgba(8,8,8,0.88);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
@@ -46,163 +51,212 @@
       color: var(--text);
     }
 
-    /* ── Intro ── */
-    .kg-intro {
-      position: fixed;
-      inset: var(--nav-h) 0 0;
-      z-index: 15;
+    /* ── Hero ── */
+    .kg-hero {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #080808;
-      padding: 40px 24px;
-      transition: opacity 0.5s, transform 0.5s;
+      align-items: flex-start;
+      gap: 64px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: calc(var(--nav-h) + 64px) 48px 80px;
     }
-    .kg-intro.hidden { opacity: 0; pointer-events: none; transform: translateY(-16px); }
 
-    .kg-intro-inner {
-      max-width: 680px;
-      text-align: center;
+    .kg-cover-wrap {
+      flex: 0 0 auto;
+      width: 300px;
+    }
+    .kg-cover-wrap img {
+      width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.75);
+      display: block;
+    }
+
+    .kg-info {
+      flex: 1;
+      padding-top: 8px;
     }
     .kg-eyebrow {
       font-family: var(--font-body);
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
     .kg-title {
       font-family: var(--font-display);
-      font-size: clamp(52px, 10vw, 110px);
+      font-size: clamp(52px, 7vw, 96px);
       font-weight: 500;
       line-height: 0.95;
       color: #fff;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
     .kg-synopsis {
       font-family: var(--font-body);
-      font-size: clamp(14px, 1.3vw, 17px);
-      line-height: 1.75;
-      color: rgba(240,237,232,0.72);
-      margin-bottom: 40px;
+      font-size: clamp(14px, 1.2vw, 16px);
+      line-height: 1.78;
+      color: rgba(240,237,232,0.65);
+      max-width: 520px;
     }
-    .kg-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+
+    /* ── Grid section ── */
+    .kg-grid-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+    .kg-grid-heading {
       font-family: var(--font-body);
-      font-size: 13px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       color: var(--text-muted);
-      cursor: pointer;
-      background: none;
-      border: none;
-      transition: color 0.2s;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
     }
-    .kg-cta:hover { color: var(--text); }
-    .kg-scroll-hint {
-      width: 26px;
-      height: 42px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
+    .kg-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .kg-thumb {
       position: relative;
+      cursor: pointer;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #111;
+      aspect-ratio: 3 / 4;
     }
-    .kg-scroll-hint::after {
-      content: '';
+    .kg-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s var(--ease-out);
+    }
+    .kg-thumb:hover img { transform: scale(1.04); }
+    .kg-thumb-num {
       position: absolute;
-      top: 5px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 3px;
-      height: 7px;
-      background: var(--text-muted);
-      border-radius: 999px;
-      animation: scrollDot 1.6s ease-in-out infinite;
-    }
-    @keyframes scrollDot {
-      0%  { opacity: 1; top: 5px; }
-      80% { opacity: 0; top: 22px; }
-      100%{ opacity: 0; top: 5px; }
-    }
-
-    /* ── Viewer: full-bleed scroll, no text panel ── */
-    .kg-viewer {
-      position: fixed;
-      inset: var(--nav-h) 0 0;
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-      -webkit-overflow-scrolling: touch;
-      background: #050505;
+      bottom: 10px;
+      left: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: rgba(255,255,255,0.55);
       opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s;
+      transition: opacity 0.2s;
     }
-    .kg-viewer::-webkit-scrollbar { display: none; }
-    .kg-viewer { scrollbar-width: none; }
-    .kg-viewer.active { opacity: 1; pointer-events: auto; }
+    .kg-thumb:hover .kg-thumb-num { opacity: 1; }
 
-    /* ── Slide types ── */
-    .kg-slide {
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
+    /* ── Lightbox ── */
+    .kg-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(0,0,0,0.96);
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100%;
-      padding: 16px;
-      background: #050505;
-    }
-
-    /* Single page */
-    .kg-slide.single img {
-      max-height: calc(100dvh - var(--nav-h) - 32px);
-      max-width: 100%;
-      object-fit: contain;
-      display: block;
-      border-radius: 4px;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.7);
-    }
-
-    /* Double spread */
-    .kg-slide.spread {
-      gap: 2px;
-      padding: 12px 8px;
-    }
-    .kg-slide.spread img {
-      max-height: calc(100dvh - var(--nav-h) - 24px);
-      width: calc(50% - 1px);
-      object-fit: contain;
-      display: block;
-      border-radius: 2px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-    }
-
-    /* Entrance fade */
-    .kg-slide img {
       opacity: 0;
-      transform: scale(0.98);
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      pointer-events: none;
+      transition: opacity 0.25s;
     }
-    .kg-slide.in-view img { opacity: 1; transform: scale(1); }
+    .kg-lightbox.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-    /* ── Progress bar ── */
-    .kg-progress {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      height: 2px;
-      background: rgba(255,255,255,0.55);
-      z-index: 20;
-      width: 0%;
-      transition: width 0.3s ease;
+    .kg-lb-img-wrap {
+      max-width: calc(100vw - 140px);
+      max-height: calc(100vh - 48px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .kg-lb-img-wrap img {
+      max-width: 100%;
+      max-height: calc(100vh - 48px);
+      object-fit: contain;
+      display: block;
+      border-radius: 3px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.8);
+      transition: opacity 0.18s;
+    }
+    .kg-lb-img-wrap img.switching { opacity: 0; }
+
+    .kg-lb-close {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      font-size: 22px;
+      line-height: 1;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .kg-lb-close:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+    .kg-lb-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.75);
+      font-size: 24px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .kg-lb-arrow:hover { background: rgba(255,255,255,0.14); color: #fff; }
+    .kg-lb-arrow:disabled { opacity: 0.2; pointer-events: none; }
+    .kg-lb-prev { left: 20px; }
+    .kg-lb-next { right: 20px; }
+
+    .kg-lb-counter {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      color: rgba(255,255,255,0.35);
+      white-space: nowrap;
     }
 
     /* ── Mobile ── */
-    @media (max-width: 600px) {
-      .kg-slide.spread { flex-direction: column; gap: 4px; padding: 8px; }
-      .kg-slide.spread img { width: 100%; max-height: 48dvh; }
-      .kg-slide.single img { max-height: calc(100dvh - var(--nav-h) - 16px); }
+    @media (max-width: 700px) {
+      .kg-hero {
+        flex-direction: column;
+        padding: calc(var(--nav-h) + 32px) 20px 48px;
+        gap: 32px;
+      }
+      .kg-cover-wrap { width: 100%; max-width: 280px; }
+      .kg-grid-section { padding: 0 20px 60px; }
+      .kg-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .kg-lb-img-wrap { max-width: calc(100vw - 96px); }
+      .kg-lb-arrow { width: 40px; height: 40px; font-size: 20px; }
+      .kg-lb-prev { left: 10px; }
+      .kg-lb-next { right: 10px; }
     }
   </style>
 </head>
@@ -211,125 +265,114 @@
   <header class="aw-nav" role="banner">
     <a href="comics.html" class="aw-back">← Comics</a>
     <span class="aw-nav-title">Kagemusha</span>
-    <button class="menu-pill" aria-label="Open navigation">Menu</button>
+    <button type="button" class="menu-pill" aria-label="Open navigation">Menu</button>
   </header>
 
-  <!-- Full synopsis intro -->
-  <section class="kg-intro" id="kgIntro">
-    <div class="kg-intro-inner">
+  <!-- Hero: cover + description -->
+  <section class="kg-hero">
+    <div class="kg-cover-wrap">
+      <img src="assets/proj2/cover.jpg" alt="Kagemusha cover" loading="eager" />
+    </div>
+    <div class="kg-info">
       <p class="kg-eyebrow">Comics · 01 · 31 pages</p>
       <h1 class="kg-title">Kagemusha</h1>
       <p class="kg-synopsis">Three years ago, he was framed, disgraced, and cast out into the shadows. Now, terrified whispers are spreading through the village: Sam is back. His path of retribution leaves absolute carnage in its wake, culminating in the shocking death of the Shogun, Lord Hashirama. Sam steps into the rain for a breathtaking, violent final stand, ensuring that the slate will be wiped entirely clean.</p>
-      <button class="kg-cta" id="kgEnterBtn">
-        <span class="kg-scroll-hint" aria-hidden="true"></span>
-        Scroll to read
-      </button>
     </div>
   </section>
 
-  <!-- Full-bleed scroll viewer -->
-  <div class="kg-viewer" id="kgViewer"></div>
+  <!-- Pages grid -->
+  <section class="kg-grid-section">
+    <p class="kg-grid-heading">All Pages</p>
+    <div class="kg-grid" id="kgGrid"></div>
+  </section>
 
-  <!-- Progress bar -->
-  <div class="kg-progress" id="kgProgress"></div>
+  <!-- Lightbox -->
+  <div class="kg-lightbox" id="kgLightbox" role="dialog" aria-modal="true" aria-label="Page viewer">
+    <button type="button" class="kg-lb-close" id="kgClose" aria-label="Close">✕</button>
+    <button type="button" class="kg-lb-arrow kg-lb-prev" id="kgPrev" aria-label="Previous page">&#8592;</button>
+    <div class="kg-lb-img-wrap">
+      <img id="kgLbImg" src="" alt="" />
+    </div>
+    <button type="button" class="kg-lb-arrow kg-lb-next" id="kgNext" aria-label="Next page">&#8594;</button>
+    <div class="kg-lb-counter" id="kgCounter"></div>
+  </div>
 
   <script>
   (function () {
     'use strict';
 
-    const TOTAL = 31;
-    const intro    = document.getElementById('kgIntro');
-    const viewer   = document.getElementById('kgViewer');
-    const progress = document.getElementById('kgProgress');
-    const enterBtn = document.getElementById('kgEnterBtn');
+    const TOTAL   = 31;
+    const grid    = document.getElementById('kgGrid');
+    const lightbox = document.getElementById('kgLightbox');
+    const lbImg   = document.getElementById('kgLbImg');
+    const counter = document.getElementById('kgCounter');
+    const prevBtn = document.getElementById('kgPrev');
+    const nextBtn = document.getElementById('kgNext');
+    const closeBtn = document.getElementById('kgClose');
 
-    // ── Build slides ─────────────────────────────────────────
-    // Layout: page 1 single, pages 2-30 in spreads (pairs), page 31 single
-    const slides = [];
-
-    // Slide 0: page 1 (single)
-    slides.push({ type: 'single', pages: [1] });
-
-    // Slides 1..14: pages 2-3, 4-5, ... 29-30 (spreads)
-    for (let p = 2; p <= 30; p += 2) {
-      slides.push({ type: 'spread', pages: [p, p + 1] });
-    }
-
-    // Last slide: page 31 (single)
-    slides.push({ type: 'single', pages: [31] });
-
-    // total slides = 1 + 14 + 1 = 16
-    const totalSlides = slides.length;
+    let current = 0;
 
     function imgPath(n) {
       return `assets/proj2/${String(n).padStart(2, '0')}.jpg`;
     }
 
-    slides.forEach((slide, i) => {
-      const div = document.createElement('div');
-      div.className = `kg-slide ${slide.type}`;
-      div.dataset.index = i;
+    // Build grid thumbnails
+    for (let i = 1; i <= TOTAL; i++) {
+      const thumb = document.createElement('div');
+      thumb.className = 'kg-thumb';
+      thumb.dataset.page = i;
 
-      slide.pages.forEach((pageNum, j) => {
-        const img = document.createElement('img');
-        img.src = imgPath(pageNum);
-        img.alt = `Page ${pageNum}`;
-        img.loading = i < 2 ? 'eager' : 'lazy';
-        img.addEventListener('error', function () {
-          if (!this.dataset.fb) {
-            this.dataset.fb = '1';
-            this.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
-              `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800"><rect width="100%" height="100%" fill="#111"/><text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-size="18" fill="#444">page ${pageNum}</text></svg>`
-            )}`;
-          }
-        });
-        div.appendChild(img);
-      });
+      const img = document.createElement('img');
+      img.src = imgPath(i);
+      img.alt = `Page ${i}`;
+      img.loading = i <= 6 ? 'eager' : 'lazy';
 
-      viewer.appendChild(div);
-    });
+      const num = document.createElement('span');
+      num.className = 'kg-thumb-num';
+      num.textContent = String(i).padStart(2, '0');
 
-    // ── IntersectionObserver ──────────────────────────────────
-    let currentIndex = 0;
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          currentIndex = parseInt(entry.target.dataset.index, 10);
-          const pct = totalSlides > 1 ? ((currentIndex) / (totalSlides - 1)) * 100 : 100;
-          progress.style.width = pct + '%';
-        } else {
-          entry.target.classList.remove('in-view');
-        }
-      });
-    }, { root: viewer, threshold: 0.5 });
-
-    viewer.querySelectorAll('.kg-slide').forEach(el => observer.observe(el));
-
-    // ── Enter viewer ─────────────────────────────────────────
-    function activate() {
-      intro.classList.add('hidden');
-      viewer.classList.add('active');
-      viewer.querySelectorAll('.kg-slide')[0]?.classList.add('in-view');
+      thumb.appendChild(img);
+      thumb.appendChild(num);
+      thumb.addEventListener('click', () => open(i - 1));
+      grid.appendChild(thumb);
     }
 
-    enterBtn.addEventListener('click', activate);
-    intro.addEventListener('wheel',   activate, { passive: true, once: true });
-    setTimeout(activate, 4000);
+    function updateLightbox() {
+      const pageNum = current + 1;
+      lbImg.classList.add('switching');
+      setTimeout(() => {
+        lbImg.src = imgPath(pageNum);
+        lbImg.alt = `Page ${pageNum}`;
+        lbImg.classList.remove('switching');
+      }, 100);
+      counter.textContent = `${String(pageNum).padStart(2,'0')} / ${String(TOTAL).padStart(2,'0')}`;
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === TOTAL - 1;
+    }
 
-    // ── Keyboard nav ─────────────────────────────────────────
+    function open(index) {
+      current = index;
+      updateLightbox();
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    prevBtn.addEventListener('click', () => { if (current > 0) { current--; updateLightbox(); } });
+    nextBtn.addEventListener('click', () => { if (current < TOTAL - 1) { current++; updateLightbox(); } });
+    closeBtn.addEventListener('click', close);
+
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) close(); });
+
     document.addEventListener('keydown', e => {
-      if (!viewer.classList.contains('active')) return;
-      const slideEls = viewer.querySelectorAll('.kg-slide');
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-        e.preventDefault();
-        slideEls[Math.min(currentIndex + 1, totalSlides - 1)]?.scrollIntoView({ behavior: 'smooth' });
-      }
-      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-        e.preventDefault();
-        slideEls[Math.max(currentIndex - 1, 0)]?.scrollIntoView({ behavior: 'smooth' });
-      }
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape')                        close();
+      if (e.key === 'ArrowLeft'  && current > 0)        { current--; updateLightbox(); }
+      if (e.key === 'ArrowRight' && current < TOTAL - 1) { current++; updateLightbox(); }
     });
   })();
   </script>
