@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deadman's Gun — Comics</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    html, body {
+      height: auto;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background: #080808;
+    }
+
+    /* ── Nav ── */
+    .aw-nav {
+      position: fixed;
+      inset: 0 0 auto;
+      height: var(--nav-h);
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(8,8,8,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .aw-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .aw-back:hover { color: var(--text); }
+    .aw-nav-title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ── Hero ── */
+    .kg-hero {
+      display: flex;
+      align-items: flex-start;
+      gap: 64px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: calc(var(--nav-h) + 64px) 48px 80px;
+    }
+
+    .kg-cover-wrap {
+      flex: 0 0 auto;
+      width: 300px;
+    }
+    .kg-cover-wrap img {
+      width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.75);
+      display: block;
+    }
+
+    .kg-info {
+      flex: 1;
+      padding-top: 8px;
+    }
+    .kg-eyebrow {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .kg-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 500;
+      line-height: 0.95;
+      color: #fff;
+      margin-bottom: 28px;
+    }
+    .kg-synopsis {
+      font-family: var(--font-body);
+      font-size: clamp(14px, 1.2vw, 16px);
+      line-height: 1.78;
+      color: rgba(240,237,232,0.65);
+      max-width: 520px;
+    }
+
+    /* ── Grid section ── */
+    .kg-grid-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 48px 100px;
+    }
+    .kg-grid-heading {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .kg-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .kg-thumb {
+      position: relative;
+      cursor: pointer;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #111;
+      aspect-ratio: 3 / 4;
+    }
+    .kg-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s var(--ease-out);
+    }
+    .kg-thumb:hover img { transform: scale(1.04); }
+    .kg-thumb-num {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: rgba(255,255,255,0.55);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .kg-thumb:hover .kg-thumb-num { opacity: 1; }
+
+    /* ── Lightbox ── */
+    .kg-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(0,0,0,0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .kg-lightbox.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .kg-lb-img-wrap {
+      max-width: calc(100vw - 140px);
+      max-height: calc(100vh - 48px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .kg-lb-img-wrap img {
+      max-width: 100%;
+      max-height: calc(100vh - 48px);
+      object-fit: contain;
+      display: block;
+      border-radius: 3px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.8);
+      transition: opacity 0.18s;
+    }
+    .kg-lb-img-wrap img.switching { opacity: 0; }
+
+    .kg-lb-close {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      font-size: 22px;
+      line-height: 1;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .kg-lb-close:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+    .kg-lb-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.75);
+      font-size: 24px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .kg-lb-arrow:hover { background: rgba(255,255,255,0.14); color: #fff; }
+    .kg-lb-arrow:disabled { opacity: 0.2; pointer-events: none; }
+    .kg-lb-prev { left: 20px; }
+    .kg-lb-next { right: 20px; }
+
+    .kg-lb-counter {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      color: rgba(255,255,255,0.35);
+      white-space: nowrap;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 700px) {
+      .kg-hero {
+        flex-direction: column;
+        padding: calc(var(--nav-h) + 32px) 20px 48px;
+        gap: 32px;
+      }
+      .kg-cover-wrap { width: 100%; max-width: 280px; }
+      .kg-grid-section { padding: 0 20px 60px; }
+      .kg-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .kg-lb-img-wrap { max-width: calc(100vw - 96px); }
+      .kg-lb-arrow { width: 40px; height: 40px; font-size: 20px; }
+      .kg-lb-prev { left: 10px; }
+      .kg-lb-next { right: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="aw-nav" role="banner">
+    <a href="comics.html" class="aw-back">← Comics</a>
+    <span class="aw-nav-title">Deadman's Gun</span>
+    <button type="button" class="menu-pill" aria-label="Open navigation">Menu</button>
+  </header>
+
+  <!-- Hero: cover + description -->
+  <section class="kg-hero">
+    <div class="kg-cover-wrap">
+      <img src="assets/deadmans-gun/01.jpg" alt="Deadman's Gun cover" loading="eager" />
+    </div>
+    <div class="kg-info">
+      <p class="kg-eyebrow">Comics · 02 · 24 pages</p>
+      <h1 class="kg-title">Deadman's Gun</h1>
+      <p class="kg-synopsis">In a town where justice died long before its sheriff, one man returns from the grave with a weapon that cannot miss and a score that cannot be settled in life alone. Deadman's Gun is a brutal western about vengeance, consequence, and what it costs to pull the trigger one last time.</p>
+    </div>
+  </section>
+
+  <!-- Pages grid -->
+  <section class="kg-grid-section">
+    <p class="kg-grid-heading">All Pages</p>
+    <div class="kg-grid" id="kgGrid"></div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="kg-lightbox" id="kgLightbox" role="dialog" aria-modal="true" aria-label="Page viewer">
+    <button type="button" class="kg-lb-close" id="kgClose" aria-label="Close">✕</button>
+    <button type="button" class="kg-lb-arrow kg-lb-prev" id="kgPrev" aria-label="Previous page">&#8592;</button>
+    <div class="kg-lb-img-wrap">
+      <img id="kgLbImg" src="" alt="" />
+    </div>
+    <button type="button" class="kg-lb-arrow kg-lb-next" id="kgNext" aria-label="Next page">&#8594;</button>
+    <div class="kg-lb-counter" id="kgCounter"></div>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    const TOTAL    = 24;
+    const BASE     = 'assets/deadmans-gun/';
+    const grid     = document.getElementById('kgGrid');
+    const lightbox = document.getElementById('kgLightbox');
+    const lbImg    = document.getElementById('kgLbImg');
+    const counter  = document.getElementById('kgCounter');
+    const prevBtn  = document.getElementById('kgPrev');
+    const nextBtn  = document.getElementById('kgNext');
+    const closeBtn = document.getElementById('kgClose');
+
+    let current = 0;
+
+    function imgPath(n) {
+      return `${BASE}${String(n).padStart(2, '0')}.jpg`;
+    }
+
+    // Build grid thumbnails
+    for (let i = 1; i <= TOTAL; i++) {
+      const thumb = document.createElement('div');
+      thumb.className = 'kg-thumb';
+
+      const img = document.createElement('img');
+      img.src = imgPath(i);
+      img.alt = `Page ${i}`;
+      img.loading = i <= 6 ? 'eager' : 'lazy';
+
+      const num = document.createElement('span');
+      num.className = 'kg-thumb-num';
+      num.textContent = String(i).padStart(2, '0');
+
+      thumb.appendChild(img);
+      thumb.appendChild(num);
+      thumb.addEventListener('click', () => openLightbox(i - 1));
+      grid.appendChild(thumb);
+    }
+
+    function updateLightbox() {
+      const pageNum = current + 1;
+      lbImg.classList.add('switching');
+      setTimeout(() => {
+        lbImg.src = imgPath(pageNum);
+        lbImg.alt = `Page ${pageNum}`;
+        lbImg.classList.remove('switching');
+      }, 100);
+      counter.textContent = `${String(pageNum).padStart(2,'0')} / ${String(TOTAL).padStart(2,'0')}`;
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === TOTAL - 1;
+    }
+
+    function openLightbox(index) {
+      current = index;
+      updateLightbox();
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    prevBtn.addEventListener('click', () => { if (current > 0) { current--; updateLightbox(); } });
+    nextBtn.addEventListener('click', () => { if (current < TOTAL - 1) { current++; updateLightbox(); } });
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape')                             closeLightbox();
+      if (e.key === 'ArrowLeft'  && current > 0)         { current--; updateLightbox(); }
+      if (e.key === 'ArrowRight' && current < TOTAL - 1) { current++; updateLightbox(); }
+    });
+  })();
+  </script>
+
+  <script src="menu.js"></script>
+</body>
+</html>
